@@ -123,6 +123,25 @@ body{
   object-fit: cover;
 }
 
+.social-links {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 400px;
+}
+
+.social-links a {
+  font-size: 13px;
+  font-family: 'Times New Roman', Times, serif;
+  color: lightgrey;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  color: black;
+}
 @media (max-width: 900px) {
   .pictures {
     grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
