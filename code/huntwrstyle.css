@@ -1,0 +1,67 @@
+body{
+    background-color: White;
+}
+.logo{
+    position: absolute;
+        top: 0;
+        left: -40;
+}
+.start{
+    background-color: white;
+}
+
+.window {
+  position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+  width: 400px;
+  height: 300px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.art{
+  position: absolute;
+    top:20%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    transform-origin: top left;
+    font-family: monospace;
+    font-size: 0.01em; 
+    color: Black;  
+    white-space: pre;
+    animation-name: text-move;
+    animation-duration: 2.5s;
+}
+
+#terminal {
+  position: absolute;
+    top:80%;
+    left:50%;
+    transform: translate(-50%, -50%) scale(1.2);
+  background: white;
+  animation-name: intro;
+  animation-duration: 2.6s;
+}
+
+@keyframes intro {
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    opactiy: 1;
+  }
+}
+
+@keyframes text-move{
+  from{opacity:0; top:50%;}
+  to{opacity:1; top:20%;}
+
+}

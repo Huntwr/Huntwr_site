@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <meta charset="UTF-8">
+    <title>Huntwr</title>
+    <link rel="stylesheet" href="huntwrstyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+</head>
+<body>
+<div class = "start">
+    <div class="art">
+    <pre>
+    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░  
+    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+    ░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░  
+    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+    ░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░    ░▒▓█████████████▓▒░░▒▓█▓▒░░▒▓█▓▒░ 
+    </pre>
+    </div>
+
+    <div id="terminal"></div>
+</div>
+
+<script>
+    const term = new Terminal({
+      cursorBlink: true,
+      fontSize: 14,
+      theme: {
+        background: '#ffffff',
+        foreground: '#000000',
+        cursor: '#000000'
+      }
+    });
+    term.write("Welcome to Huntwrs site\r\n");
+    term.write("Type Help for more options:\r\n$ ");
+let currentLine = "";
+ term.onData(data => {
+      const code = data.charCodeAt(0);
+
+      if (code === 13) { 
+        handleCommand(currentLine)
+        currentLine = "";
+      } else if (code === 127) { 
+        if (currentLine.length > 0) {
+          currentLine = currentLine.slice(0, -1);
+          term.write('\b \b');
+        }
+      } else {
+        currentLine += data;
+        term.write(data);
+      }
+    });
+
+function handleCommand(input) {
+        term.write("\r\n");
+
+        if (input === "help") {
+            term.write("Available commands:\r\n");
+            term.write("  help   - Show this message\r\n");
+            term.write("  clear  - Clear the screen\r\n");
+            term.write("  about  - Info about this site\r\n $ \x1B[1;30mguest:\x1B[0m ");
+        } 
+        else if (input === "clear") {
+            term.clear();
+            term.write("$ \x1B[1;30mguest:\x1B[0m");
+        }
+        else if (input === "about") {
+            term.write("This is Huntwr's site.\r\n $ \x1B[1;30mguest:\x1B[0m ");
+        }
+        else if (input.length > 0) {
+            term.write("Unknown command: " + input + "\r\n $ \x1B[1;30mguest:\x1B[0m ");
+        }
+}
+  term.open(document.getElementById("terminal"));
+  term.write('\x1B[1;30mguest:\x1B[0m');
+  term.focus;
+</script>
+
+
+</body>
+
+
+</html>
