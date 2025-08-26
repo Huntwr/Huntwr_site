@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
 </head>
 <body>
-<div class = "start">
+<div class = "start" id = "start">
     <div class="art">
     <pre>
     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░  
@@ -23,8 +23,14 @@
 
     <div id="terminal"></div>
 </div>
+<div class = "videos" id="videos" style="display: none;">
+<iframe width="420" height="345" src="https://www.youtube.com/watch?v=1yXsaLE0zPw&ab_channel=Huntwr">
+</iframe>
+</div>
 
 <script>
+
+  let currentDir = "";
     const term = new Terminal({
       cursorBlink: true,
       fontSize: 14,
@@ -61,21 +67,77 @@ function handleCommand(input) {
             term.write("Available commands:\r\n");
             term.write("  help   - Show this message\r\n");
             term.write("  clear  - Clear the screen\r\n");
-            term.write("  about  - Info about this site\r\n $ \x1B[1;30mguest:\x1B[0m ");
+            term.write("  quickfetch  - fetch info \r\n")
+            term.write("  ls  - list directories \r\n")
+            term.write("  cd {path}  - travel to directories \r\n")
+            term.write("  about  - Info about this site\r\n $ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         } 
         else if (input === "clear") {
             term.clear();
-            term.write("$ \x1B[1;30mguest:\x1B[0m");
+            term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
         else if (input === "about") {
-            term.write("This is Huntwr's site.\r\n $ \x1B[1;30mguest:\x1B[0m ");
+            term.write("This is Huntwr's site.\r\n $ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
-        else if (input.length > 0) {
-            term.write("Unknown command: " + input + "\r\n $ \x1B[1;30mguest:\x1B[0m ");
+        else if (input === "quickfetch"){
+        const neofetchScreen = `
+                                                   
+                                                   
+                             .=+=+*@%              
+                            .-...:==++@*           
+                  =@@@@@@@@@@@=     .=+=%          
+                *@@@@@@@@@@@@@@@@     .*           
+            .-=:=%..@@@@@@@@@@@@@@%*#*%#-          
+       :=-=--. :*  .@@@@@@@@@@@@@@@+*#*++####=              User: guest
+   -====#@@@=. *.  =@@@@@@@@@@@@@.-*#@%**+*******:          ----------------
+=@@@%@@@@@@*=.     @@* @@@@@@-  ..:%@*#%*+********#         OS: HuntwrOS 1.0
+@@@@%%+-=====:     -+   @@@@@@ .. =@@@*+*+*********         Shell: xterm.js
++============-=-@=@@@@@@@@@@@.  *@# .#+**+*********         Resolution: 1920x1080
++=============%@@@.  ...   .:=@@=@++.+ .**********#         CPU: Intel Core i9
+===========--=+*##=  ....       + *+*#  :#*******##         RAM: 32GB
++========-===+==++- *@         %    :+ +*+++==+*##%
++=======-*##%#+=-@@@@         -      .+++++++=====+
+=====-+***#%#+***@@                 -+***####*+++**
+===--+##*+=-+***+==      =+%@#    ##*++*##**#%#****
+-======-===============@@@@@*%@@%%##****+****%%****
+=====-===================+*#@@@%%%%#*****++**%%%***
+        `;
+              term.write(neofetchScreen.replace(/\n/g, '\r\n'));
+              term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
+                    
         }
+        else if (input === "videos"){
+          document.getElementById("start").style.display = "none";
+          document.getElementById("videos").style.display = "block";
+        }
+        else if (input === "ls"){
+          if(currentDir === ""){
+              term.write("Videos\r\n")
+              term.write("Pictures\r\n")
+              term.write("About me\r\n")
+              term.write("Contact me\r\n")
+              term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
+          }else if(currentDir === "Videos"){
+            term.write("    -even when the sun is dead\r\n");
+            term.write("    -A Film About Loneliness\r\n");
+            term.write("    -[RIP PIERRE]\r\n");
+            term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
+          }
+
+        }
+        else if (input === "cd Videos"){
+          currentDir = "Videos"
+              term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m ");
+        }
+        else if (input === "cd .."){
+          currentDir = ""
+              term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m ");
+        }
+        else if (input.length > 0) { term.write("Unknown command: " + input + "\r\n $ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m"); }
+
 }
   term.open(document.getElementById("terminal"));
-  term.write('\x1B[1;30mguest:\x1B[0m');
+  term.write("\x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
   term.focus;
 </script>
 
