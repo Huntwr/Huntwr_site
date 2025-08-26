@@ -122,7 +122,7 @@ function handleCommand(input) {
               term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
                     
         }
-        else if (input.toLowerCase() === "videos"){
+        else if (currentDir === "Videos" && input.toLowerCase() === "videos"){
           document.getElementById("start").style.display = "none";
           document.getElementById("videos").style.display = "block";
           term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
