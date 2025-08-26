@@ -31,7 +31,7 @@ body{
     transform: translate(-50%, -50%);
     transform-origin: top left;
     font-family: monospace;
-    font-size: 0.01em; 
+    font-size: 9px; 
     color: Black;  
     white-space: pre;
     animation-name: text-move;
