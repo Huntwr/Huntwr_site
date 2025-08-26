@@ -3,7 +3,7 @@
 This is the source code for my personal website, built to showcase content from my YouTube channel.  
 It includes my **pictures, videos**, and other creative projects (more sections may be added in the future).  
 
-The site uses a **retro terminal-style interface** where visitors can type commands to explore different sections.
+The Style is inspired from a terminal engine
 
 ---
 
@@ -17,7 +17,7 @@ The site uses a **retro terminal-style interface** where visitors can type comma
     - `cd {path}` – Move into a directory
     - `cd ..` – Move back
     - `videos` – Display an embedded YouTube video
-    - `show all` – Display all pictures (when inside the `Pictures` directory)
+    - `show all` – Displays all the contents of the directory you are in
     - `about` – Learn about the site
     - `quickfetch` – Fun terminal-style system info screen  
 
@@ -25,13 +25,11 @@ The site uses a **retro terminal-style interface** where visitors can type comma
   Embedded YouTube videos that I’ve made and shared on my channel.  
 
 - **Pictures Section**  
-  A responsive gallery grid of images.  
-  - Adjusts layout for desktop, tablet, and mobile.
+Screenshots from videos, and pictures that I have taken outside of videos
 
 - **Custom Styling**  
   - Glassmorphism-style "window" panels  
   - Animated ASCII art logo  
-  - Hover-animated buttons  
 
 ---
 
