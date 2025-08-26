@@ -24,8 +24,8 @@
     <div id="terminal"></div>
 </div>
 <div class = "videos" id="videos" style="display: none;">
-<iframe width="420" height="345" src="https://www.youtube.com/watch?v=1yXsaLE0zPw&ab_channel=Huntwr">
-</iframe>
+  <iframe width="420" height="345" src="https://www.youtube.com/embed/1yXsaLE0zPw?rel=0" frameborder="0" allowfullscreen></iframe>
+  <button class="button-57" role="button" onclick= "back()"><span class="text">Back</span><span>Go Back</span></button>
 </div>
 
 <script>
@@ -102,13 +102,15 @@ function handleCommand(input) {
 -======-===============@@@@@*%@@%%##****+****%%****
 =====-===================+*#@@@%%%%#*****++**%%%***
         `;
+
               term.write(neofetchScreen.replace(/\n/g, '\r\n'));
               term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
                     
         }
-        else if (input === "videos"){
+        else if (input.toLowerCase() === "videos"){
           document.getElementById("start").style.display = "none";
           document.getElementById("videos").style.display = "block";
+          term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
         else if (input === "ls"){
           if(currentDir === ""){
@@ -136,9 +138,14 @@ function handleCommand(input) {
         else if (input.length > 0) { term.write("Unknown command: " + input + "\r\n $ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m"); }
 
 }
+
+function back(){
+  document.getElementById("start").style.display = "block";
+  document.getElementById("videos").style.display = "none";
+}
   term.open(document.getElementById("terminal"));
   term.write("\x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
-  term.focus;
+  term.focus();
 </script>
 
 
