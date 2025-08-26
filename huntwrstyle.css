@@ -38,11 +38,29 @@ body{
     animation-duration: 2.5s;
 }
 
-.videos{
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
+.videos {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.videos iframe {
+  position: absolute;
+  width: 200px;
+  height: 150px;
+  border: none;
+}
+
+
+.videos iframe:first-child {
+  width: 420px;
+  height: 345px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* always on top */
 }
 
 .pictures {
@@ -67,6 +85,8 @@ body{
   transform: translateX(-50%);
   display: flex;
   gap: 400px;
+  animation-name: intro;
+  animation-duration: 2.5s;
 }
 
 .social-links a {
@@ -74,6 +94,8 @@ body{
   font-family: 'Times New Roman', Times, serif;
   color: lightgrey;
   text-decoration: none;
+  animation-name: intro;
+  animation-duration: 2.5s;
 }
 
 .social-links a:hover {

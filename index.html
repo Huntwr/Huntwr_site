@@ -24,8 +24,15 @@
     </div>
     <div id="terminal"></div>
 </div>
-<div class = "videos" id="videos" style="display: none;">
-  <iframe width="420" height="345" src="https://www.youtube.com/embed/1yXsaLE0zPw?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<div class="videos" id="videos" style="display: none;">
+  <iframe src="https://www.youtube.com/embed/1yXsaLE0zPw" frameborder="0" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/exW5cufwlFI" frameborder="0" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/DLfkcBG-Y4k" frameborder="0" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/dsRx8bhCiRo" frameborder="0" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/CQmcnCrWxvs" frameborder="0" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/6iE1uEFgJ4Y" frameborder="0" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/-AvAvNIP8VY" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <div class="pictures" id="pictures" style="display: none;"> 
@@ -128,11 +135,6 @@ function handleCommand(input) {
               term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
                     
         }
-        else if (currentDir === "Videos" && input.toLowerCase() === "show all"){
-          document.getElementById("start").style.display = "none";
-          document.getElementById("videos").style.display = "block";
-          term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
-        }
         else if (input === "ls"){
           if(currentDir === ""){
               term.write("Videos\r\n")
@@ -168,6 +170,11 @@ function handleCommand(input) {
         else if (input === "cd Videos"){
           currentDir = "Videos"
               term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m ");
+        }else if (currentDir === "Videos" && input.toLowerCase() === "show all"){
+          document.getElementById("start").style.display = "none";
+          document.getElementById("videos").style.display = "block";
+          document.querySelector(".social-links").style.display = "none";
+          term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
         else if (currentDir === "" && input === "cd Pictures"){
           currentDir = "Pictures"
@@ -176,6 +183,7 @@ function handleCommand(input) {
         else if (currentDir === "Pictures" && input === "show all"){
           document.getElementById("start").style.display = "none";
           document.getElementById("pictures").style.display = "block";
+          document.querySelector(".social-links").style.display = "none";
           term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
         else if (input === "cd .."){
@@ -189,10 +197,59 @@ function handleCommand(input) {
 function back(){
   document.getElementById("start").style.display = "block";
   document.getElementById("videos").style.display = "none";
+  document.querySelector(".social-links").style.display = "block";
 }
   term.open(document.getElementById("terminal"));
   term.write("\x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
   term.focus();
+
+
+window.addEventListener("load", () => {
+  const videos = document.querySelectorAll(".videos iframe");
+
+  const placed = [];
+
+  function overlaps(x, y, w, h) {
+    return placed.some(p => {
+      return !(
+        x + w < p.x ||    
+        x > p.x + p.w ||    
+        y + h < p.y ||     
+        y > p.y + p.h       
+      );
+    });
+  }
+
+  videos.forEach((vid, index) => {
+    if (index === 0) {
+      
+      placed.push({
+        x: window.innerWidth / 2 - 210, 
+        y: window.innerHeight / 2 - 172, 
+        w: 420,
+        h: 345
+      });
+      return;
+    }
+
+    const w = 200;
+    const h = 150;
+    let x, y;
+    let tries = 0;
+
+    do {
+      x = Math.random() * (window.innerWidth - w);
+      y = Math.random() * (window.innerHeight - h);
+      tries++;
+    } while (overlaps(x, y, w, h) && tries < 100);
+
+    vid.style.left = `${x}px`;
+    vid.style.top = `${y}px`;
+
+    placed.push({ x, y, w, h });
+  });
+});
+
 </script>
 
 
