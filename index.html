@@ -208,46 +208,40 @@ function back(){
 window.addEventListener("load", () => {
   const videos = document.querySelectorAll(".videos iframe");
 
-  const placed = [];
+  const videoWidth = 200;  
+  const videoHeight = 150; 
+  const padding = 50;      
+  const placed = [];     
 
-  function overlaps(x, y, w, h) {
-    return placed.some(p => {
-      return !(
-        x + w < p.x ||    
-        x > p.x + p.w ||    
-        y + h < p.y ||     
-        y > p.y + p.h       
+  function isOverlapping(x, y) {
+    return placed.some(pos => {
+      return (
+        x < pos.x + videoWidth + 20 && 
+        x + videoWidth + 20 > pos.x &&
+        y < pos.y + videoHeight + 20 &&
+        y + videoHeight + 20 > pos.y
       );
     });
   }
 
-  videos.forEach((vid, index) => {
-    if (index === 0) {
-      
-      placed.push({
-        x: window.innerWidth / 2 - 210, 
-        y: window.innerHeight / 2 - 172, 
-        w: 420,
-        h: 345
-      });
-      return;
-    }
+  videos.forEach((video, index) => {
+    if (index === 0) return;
 
-    const w = 200;
-    const h = 150;
     let x, y;
-    let tries = 0;
+    let attempts = 0;
 
     do {
-      x = Math.random() * (window.innerWidth - w);
-      y = Math.random() * (window.innerHeight - h);
-      tries++;
-    } while (overlaps(x, y, w, h) && tries < 100);
+      x = Math.random() * (window.innerWidth - videoWidth - padding * 2) + padding;
+      y = Math.random() * (window.innerHeight - videoHeight - padding * 2) + padding;
+      attempts++;
+      if (attempts > 1000) break;
+    } while (isOverlapping(x, y));
 
-    vid.style.left = `${x}px`;
-    vid.style.top = `${y}px`;
+    video.style.position = "absolute";
+    video.style.left = `${x}px`;
+    video.style.top = `${y}px`;
 
-    placed.push({ x, y, w, h });
+    placed.push({ x, y });
   });
 });
 
