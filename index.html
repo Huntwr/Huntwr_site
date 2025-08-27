@@ -174,7 +174,6 @@ function handleCommand(input) {
         }else if (currentDir === "Videos" && input.toLowerCase() === "show all"){
           document.getElementById("start").style.display = "none";
           document.getElementById("videos").style.display = "block";
-          document.querySelector(".social-links").style.display = "none";
           term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
         else if (currentDir === "" && input === "cd Pictures"){
