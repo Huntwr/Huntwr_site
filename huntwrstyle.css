@@ -53,6 +53,19 @@ body{
   border: none;
 }
 
+.back-button {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  z-index: 1000;
+  background: none;
+  border: none;
+  font-size: 25px;
+  font-family: 'Times New Roman', Times, serif;
+  color: lightgrey;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 .pictures {
   display: grid;

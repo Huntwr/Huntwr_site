@@ -27,6 +27,7 @@
 </div>
 
 <div class="videos" id="videos" style="display: none;">
+  <button id="backButton" class="back-button">Back</button>
   <iframe src="https://www.youtube.com/embed/1yXsaLE0zPw" frameborder="0" allowfullscreen></iframe>
   <iframe src="https://www.youtube.com/embed/exW5cufwlFI" frameborder="0" allowfullscreen></iframe>
   <iframe src="https://www.youtube.com/embed/DLfkcBG-Y4k" frameborder="0" allowfullscreen></iframe>
@@ -194,10 +195,13 @@ function handleCommand(input) {
 
 }
 
-function back(){
+function back() {
   document.getElementById("start").style.display = "block";
   document.getElementById("videos").style.display = "none";
-  document.querySelector(".social-links").style.display = "block";
+
+  const socials = document.querySelector(".social-links");
+  socials.style.visibility = "visible";
+  socials.style.opacity = "1";
 }
   term.open(document.getElementById("terminal"));
   term.write("\x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
@@ -252,7 +256,7 @@ window.addEventListener("load", () => {
   });
 });
 
-
+document.getElementById("backButton").addEventListener("click", back);
 </script>
 
 
