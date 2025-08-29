@@ -81,6 +81,45 @@ body{
   object-fit: cover;
 }
 
+.about-me {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;      
+}
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  width: 90%;
+}
+
+.about-me img {
+  margin-top: 85px;
+  flex-shrink: 0;
+  width: 900px; 
+  height: auto;
+  object-fit: cover;
+}
+
+.about-text {
+  flex: 1;
+  font-family: 'Times New Roman', Times, serif;
+  color: rgb(111, 111, 111);
+  line-height: 1.6;
+  text-align: center; 
+}
+
+.about-text h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.about-text p {
+  font-size: 16px;
+}
+
+
 .social-links {
   position: absolute;
   bottom: 25px;

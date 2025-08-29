@@ -38,6 +38,8 @@
 </div>
 
 <div class="pictures" id="pictures" style="display: none;"> 
+  <button id="backButton" class="back-button">Back</button>
+  <img src="images/-1756144872.jpg" alt="">
   <img src="images/C21350.png" alt="">
   <img src="images/dknefjkernf.jpg" alt="">
   <img src="images/flowers0.png" alt="">
@@ -55,6 +57,20 @@
   <a href="https://twitter.com/technoginger1" class="twitter">Twitter</a>
   <a href="https://instagram.com/huntwr__" class="instagram">Instagram</a>
   <a href="https://github.com/Huntwr/Huntwr_site" class="github">github</a>
+</div>
+
+<div class="about-me" id="about-me" style="display: none;">
+  <button class="back-button">Back</button>
+  <div class="about-content">
+    <img src="images/-1756144872.jpg" id="abp" alt="">
+    <div class="about-text">
+      <h2>About Me</h2>
+      <p>
+        Hey, I'm Huntwr, a 19 year old filmmaker based in denver. I make films about anything and everything, I am always looking for new people to work with
+        and people to act in my films,  
+      </p>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -187,6 +203,10 @@ function handleCommand(input) {
           document.querySelector(".social-links").style.display = "none";
           term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
+        else if (input === "cd about me"){
+          document.getElementById("start").style.display = "none";
+          document.getElementById("about-me").style.display = "block";
+        }
         else if (input === "cd .."){
           currentDir = ""
               term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m ");
@@ -196,13 +216,25 @@ function handleCommand(input) {
 }
 
 function back() {
-  document.getElementById("start").style.display = "block";
+
   document.getElementById("videos").style.display = "none";
+  document.getElementById("pictures").style.display = "none";
+  document.getElementById("about-me").style.display = "none";
+
+
+  document.getElementById("start").style.display = "block";
+
 
   const socials = document.querySelector(".social-links");
+  socials.style.display = "flex";
   socials.style.visibility = "visible";
   socials.style.opacity = "1";
 }
+
+
+document.querySelectorAll(".back-button").forEach(btn => {
+  btn.addEventListener("click", back);
+});
   term.open(document.getElementById("terminal"));
   term.write("\x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
   term.focus();
