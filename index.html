@@ -8,7 +8,6 @@
     <link rel="icon" href= "images/3a8fdaabc0abd426c7c09e8b0588949a.jpg"type="image/x-icon">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"> -->
     <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
-    <link rel="stylesheet" href="huntwrstyle.css?v=2">
 </head>
 <body>
 <div class = "start" id = "start">
@@ -185,7 +184,7 @@ function handleCommand(input) {
           }
 
         }
-        else if (input === "cd Videos"){
+        else if (input === "cd videos"){
           currentDir = "Videos"
               term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m ");
         }else if (currentDir === "Videos" && input.toLowerCase() === "show all"){
@@ -193,7 +192,7 @@ function handleCommand(input) {
           document.getElementById("videos").style.display = "block";
           term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m");
         }
-        else if (currentDir === "" && input === "cd Pictures"){
+        else if (currentDir === "" && input === "cd pictures"){
           currentDir = "Pictures"
               term.write("$ \x1B[1;30mguest/"+ currentDir + ":\x1B[0m ");
         }
@@ -206,6 +205,9 @@ function handleCommand(input) {
         else if (input === "cd about me"){
           document.getElementById("start").style.display = "none";
           document.getElementById("about-me").style.display = "block";
+        }
+        else if(input == "start"){
+          window.location.href = "HuntwrOS.html";
         }
         else if (input === "cd .."){
           currentDir = ""
