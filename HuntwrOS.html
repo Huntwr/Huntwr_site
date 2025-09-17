@@ -4,20 +4,146 @@
   <meta charset="UTF-8">
   <title>HuntwrOS</title>
   <link rel="stylesheet" href="huntwros.css">
+  <script src="dist/winbox.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/98.css" />
 </head>
 <body>
-  <div class="desktop">
-    <div class="taskbar">
-      <div class="start-btn">Start</div>
-      <div class="clock" id="clock"></div>
-    </div>
-    <div class="window95">
-      <div class="titlebar">My Computer</div>
-      <div class="content">Welcome to HuntwrOS</div>
+
+<div id="loading">
+<div class="window" id="loadingwin" style="width: 300px">
+  <div class="title-bar">
+    <div class="title-bar-text">Loading....</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
     </div>
   </div>
+  <div class="window-body" id="loadingtext">
+    <p>Loading HuntwrOS</p>
+        <div class="progress-indicator" id="loadingbar">
+            <span class="progress-indicator-bar" style="width: 100%;"></span>
+        </div>
+        <button class="default" id="start" onclick="Enter()">Enter!</button>
+    </div>
+  </div>
+</div>
+
+
+  <div class="desktop">
+    <div class="window" id="welcome";>
+        <div class="title-bar">
+            <div class="title-bar-text">Start</div>
+            <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize" onclick="Maximize()"></button>
+            <button aria-label="Close" onclick="Close()"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Welcome to HuntwrOS!</p>
+        </div>
+    </div>
+</div>
+
+
   <script>
-    
+    function makeDraggableResizable(winId) {
+        const win = document.getElementById(winId);
+        const titleBar = win.querySelector(".title-bar");
+
+        // --- Dragging ---
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        titleBar.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            offsetX = e.clientX - win.offsetLeft;
+            offsetY = e.clientY - win.offsetTop;
+            win.style.position = "absolute";
+            win.style.zIndex = 1000; // bring to front
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            win.style.left = e.clientX - offsetX + "px";
+            win.style.top = e.clientY - offsetY + "px";
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+
+        // --- Resizing ---
+        const resizer = document.createElement("div");
+        resizer.style.width = "10px";
+        resizer.style.height = "10px";
+        resizer.style.background = "transparent";
+        resizer.style.position = "absolute";
+        resizer.style.right = "0";
+        resizer.style.bottom = "0";
+        resizer.style.cursor = "se-resize";
+        win.appendChild(resizer);
+
+        let isResizing = false;
+        let startWidth, startHeight, startX, startY;
+
+        resizer.addEventListener("mousedown", (e) => {
+            isResizing = true;
+            startWidth = win.offsetWidth;
+            startHeight = win.offsetHeight;
+            startX = e.clientX;
+            startY = e.clientY;
+            e.stopPropagation(); // prevent drag start
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isResizing) return;
+            const newWidth = startWidth + (e.clientX - startX);
+            const newHeight = startHeight + (e.clientY - startY);
+            win.style.width = newWidth + "px";
+            win.style.height = newHeight + "px";
+        });
+
+        document.addEventListener("mouseup", () => {
+            isResizing = false;
+        });
+    }
+
+    function Minimize(){
+        alert("test");
+    }
+
+    function Maximize(){
+        const max = document.getElementById("welcome");
+        max.style.height = "720px";
+        max.style.width = "1080px";
+    }
+
+    function Close(){
+        document.getElementById("welcome").style.display = "none";
+    }
+
+    function Enter() {
+        document.getElementById("loading").style.display = "none";
+        document.querySelector(".desktop").style.display = "block";
+    }
+
+
+    const loadingbar = document.querySelector(".progress-indicator-bar");
+
+    loadingbar.addEventListener("animationend", () => {
+        document.getElementById("loadingbar").style.display = "none";
+        document.getElementById("start").style.display = "block";
+        document.querySelector("#loadingtext p").innerText = "Welcome!";
+    });
+
+
+    //windows making draggable
+    makeDraggableResizable("welcome");
+    makeDraggableResizable("loadingwin");
+
   </script>
 </body>
 </html>
