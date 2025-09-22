@@ -8,7 +8,7 @@ html, body {
 body {
     background-image: url(images/Home.png);
     background-repeat: no-repeat;
-    background-size:120%;
+    background-size:cover;
 }
 
 .window {
