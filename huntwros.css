@@ -6,9 +6,9 @@ html, body {
 }
 
 body {
-    background-color: #007474;
+    background-image: url(images/Home.png);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size:120%;
 }
 
 .window {
@@ -18,13 +18,30 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.icon-button,
+.icon-button:focus,
+.icon-button:active,
+.icon-button:hover {
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.icon-button img {
+  width: 48px;
+  height: 48px;
+  display: block;
+  pointer-events: none;
+}
+
+
 #loading {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100vw; 
-    background-color: #c3c3c3;
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,24 +52,17 @@ body {
     width: 200px;
 }
 
-.progress-indicator-bar{
-    animation-name: loading;
-    animation-duration: 4s;
-}
-
 #start{
     display: none;
 }
 
-@keyframes loading {
-  0%{
-    width: 0%;
-  }
-  50%{
-   width: 50%;
-  }
-  100%{
-    width: 100%;
-  }
+@keyframes load-fill {
+  from { value: 0%; }
+  to { value: 100%; }
+}
+
+.progressbar-inner {
+  height: 16px;
+  animation: load-fill 3s linear forwards;
 }
 

@@ -5,7 +5,8 @@
   <title>HuntwrOS</title>
   <link rel="stylesheet" href="huntwros.css">
   <script src="dist/winbox.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/98.css" />
+<!--  <link rel="stylesheet" href="https://unpkg.com/98.css" /> -->
+  <link rel="stylesheet" href="https://unpkg.com/xp.css">
 </head>
 <body>
 
@@ -21,9 +22,7 @@
   </div>
   <div class="window-body" id="loadingtext">
     <p>Loading HuntwrOS</p>
-        <div class="progress-indicator" id="loadingbar">
-            <span class="progress-indicator-bar" style="width: 100%;"></span>
-        </div>
+        <progress max="100" value="0" id="loadingbar"></progress>
         <button class="default" id="start" onclick="Enter()">Enter!</button>
     </div>
   </div>
@@ -46,6 +45,12 @@
     </div>
 </div>
 
+    <div class="desktop-icon">
+    <button class="icon-button">
+        <img src="images/icons/Recycle Bin (empty).png" alt="Recycle Bin">
+    </button>
+    <div class="icon-label" contenteditable="true" style="width:70px">Recycle Bin</div>
+    </div>
 
   <script>
     function makeDraggableResizable(winId) {
@@ -130,15 +135,33 @@
         document.querySelector(".desktop").style.display = "block";
     }
 
+    function animateProgress() {
+        const bar = document.getElementById("loadingbar");
+        let value = 0;
+        const interval = setInterval(() => {
+            value++;
+            bar.value = value;
+            if (value >= 100) {
+            clearInterval(interval);
+            bar.style.display = "none";
+            document.getElementById("start").style.display = "block";
+            document.querySelector("#loadingtext p").innerText = "Welcome!";
+            sessionStorage.setItem("played", "true");
+            }
+        }, 30); // ~3s total
+    };
 
-    const loadingbar = document.querySelector(".progress-indicator-bar");
 
-    loadingbar.addEventListener("animationend", () => {
-        document.getElementById("loadingbar").style.display = "none";
-        document.getElementById("start").style.display = "block";
-        document.querySelector("#loadingtext p").innerText = "Welcome!";
-    });
-
+        window.onload = function() {
+        if (sessionStorage.getItem("played") === "true") {
+            document.getElementById("loading").style.display = "none";
+            document.querySelector(".desktop").style.display = "block";
+        } else {
+            document.getElementById("loading").style.display = "block";
+            document.querySelector(".desktop").style.display = "none";
+            animateProgress();
+        }
+        };
 
     //windows making draggable
     makeDraggableResizable("welcome");

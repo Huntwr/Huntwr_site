@@ -168,6 +168,9 @@ body{
   animation-duration: 2.6s;
 }
 
+
+
+
 @keyframes intro {
   0%{
     opacity: 0;
