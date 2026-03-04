@@ -4,273 +4,612 @@
   <meta charset="UTF-8">
   <title>HuntwrOS</title>
   <link rel="stylesheet" href="huntwros.css">
-<!--  <link rel="stylesheet" href="https://unpkg.com/98.css" /> -->
   <link rel="stylesheet" href="https://unpkg.com/xp.css">
+  <style>
+    /* ===== START MENU ===== */
+    #start-menu {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      left: 0;
+      width: 380px;
+      background: #fff;
+      border: 1px solid #003399;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+      font-family: 'Tahoma', sans-serif;
+      font-size: 12px;
+      z-index: 99999;
+      user-select: none;
+    }
+
+    #start-menu-header {
+      background: linear-gradient(to bottom, #1b5cc5 0%, #2a6de0 40%, #1357c0 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      gap: 10px;
+      min-height: 54px;
+    }
+
+    #start-menu-header .user-icon {
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      border: 2px solid #7ba3e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    #start-menu-header .username {
+      font-size: 13px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+
+    #start-menu-body {
+      display: flex;
+      min-height: 280px;
+    }
+
+    #start-menu-left {
+      flex: 1;
+      background: #fff;
+      border-right: 1px solid #ccc;
+      padding: 4px 0;
+    }
+
+    #start-menu-right {
+      width: 160px;
+      background: #d4e4f7;
+      padding: 4px 0;
+    }
+
+    .start-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      color: #000;
+    }
+
+    .start-menu-item:hover {
+      background: #316ac5;
+      color: #fff;
+    }
+
+    .start-menu-item .item-icon-placeholder {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .start-menu-item .item-label {
+      font-size: 12px;
+    }
+
+    .start-menu-item .item-label small {
+      display: block;
+      font-size: 10px;
+      color: #666;
+    }
+
+    .start-menu-item:hover .item-label small {
+      color: #cce;
+    }
+
+    .start-menu-separator {
+      height: 1px;
+      background: linear-gradient(to right, #ccc, #fff);
+      margin: 4px 12px;
+    }
+
+    .start-menu-separator-right {
+      height: 1px;
+      background: linear-gradient(to right, #aac4e8, #d4e4f7);
+      margin: 4px 8px;
+    }
+
+    #start-menu-right .start-menu-item .item-label {
+      font-size: 11px;
+      font-weight: bold;
+      color: #003399;
+    }
+
+    #start-menu-right .start-menu-item:hover .item-label {
+      color: #fff;
+    }
+
+    #start-menu-footer {
+      background: linear-gradient(to bottom, #1b5cc5 0%, #2a6de0 40%, #1357c0 100%);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 6px 10px;
+      gap: 6px;
+    }
+
+    .start-menu-footer-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: linear-gradient(to bottom, #5c9de8, #2e6fd6);
+      border: 1px solid #1a4ea0;
+      border-radius: 3px;
+      color: white;
+      font-family: 'Tahoma', sans-serif;
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    }
+
+    .start-menu-footer-btn:hover {
+      background: linear-gradient(to bottom, #7ab8ff, #4a8de8);
+    }
+
+    .start-menu-footer-btn .btn-icon {
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
 
+<!-- ===== LOADING SCREEN ===== -->
 <div id="loading">
-<div class="window" id="loadingwin" style="width: 300px">
-  <div class="title-bar">
-    <div class="title-bar-text">Loading....</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close"></button>
+  <div class="window" id="loadingwin" style="width: 300px">
+    <div class="title-bar">
+      <div class="title-bar-text">Loading....</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close"></button>
+      </div>
     </div>
-  </div>
-  <div class="window-body" id="loadingtext">
-    <p>Loading HuntwrOS</p>
-        <progress max="100" value="0" id="loadingbar"></progress>
-        <button class="default" id="start" onclick="Enter()">Enter!</button>
+    <div class="window-body" id="loadingtext">
+      <p>Loading HuntwrOS</p>
+      <progress max="100" value="0" id="loadingbar"></progress>
+      <button class="default" id="start" onclick="Enter()">Enter!</button>
     </div>
   </div>
 </div>
 
 
-  <div class="desktop">
-    <div class="window" id="welcome";>
-        <div class="title-bar">
-            <div class="title-bar-text">Start</div>
-            <div class="title-bar-controls">
-            <button aria-label="Minimize"></button>
-            <button aria-label="Maximize" onclick="Maximize(this)"></button>
-            <button aria-label="Close" onclick="Close(this)"></button>
-            </div>
-        </div>
-        <div class="window-body" style="width: 200px; height: 180px;">
-            <p>Welcome to HuntwrOS!</p>
-            <fieldset>
-            <legend>User</legend>
-                <div class="field-row">
-                    <input id="radio17" type="radio" name="fieldset-example2">
-                    <label for="radio17">Huntwr</label>
-                </div>
-                <div class="field-row">
-                    <input id="radio18" type="radio" name="fieldset-example2">
-                    <label for="radio18">?????</label>
-                </div>
-                <div class="field-row">
-                    <input id="radio19" type="radio" name="fieldset-example2">
-                    <label for="radio19">Guest</label>
-                </div>
-            </fieldset>
-        <button>Enter</button>
-        </div>
-    </div>
-    <div id="taskbar">
-		<div class="background sliced vertical">
-			<div class="row top"></div>
-			<div class="row middle"></div>
-			<div class="row bottom"></div>
-		</div>
-		<div id="start-button">
-			<div class="container">
-				<div class="background sliced">
-					<div class="column left">
-						<div class="row top"></div>
-						<div class="row middle"></div>
-						<div class="row bottom"></div>
-					</div>
-					<div class="column middle">
-						<div class="row top"></div>
-						<div class="row middle"></div>
-						<div class="row bottom"></div>
-					</div>
-					<div class="column right">
-						<div class="row top"></div>
-						<div class="row middle"></div>
-						<div class="row bottom"></div>
-					</div>
-				</div>
-				<div class="content">
-					<span class="icon"><img src="https://raw.githubusercontent.com/tdcosta100/WindowsXP/master/images/System/WindowsLogo-small.png" /></span>
-					<span class="text">Start</span>
-				</div>
-				<div class="overlay" title="Clique aqui para começar"></div>
-			</div>
-		</div>
-		<div id="task-band">
-		</div>
-		<div id="tray-notify">
-			<div class="container">
-				<div class="background sliced">
-					<div class="column left">
-						<div class="row top"></div>
-						<div class="row middle"></div>
-						<div class="row bottom"></div>
-					</div>
-					<div class="column middle">
-						<div class="row top"></div>
-						<div class="row middle"></div>
-						<div class="row bottom"></div>
-					</div>
-					<div class="column right">
-						<div class="row top"></div>
-						<div class="row middle"></div>
-						<div class="row bottom"></div>
-					</div>
-				</div>
-				<div class="content">
-					<div class="clock">
-						<div class="text">01:57</div>
-						<div class="overlay" title="segunda-feira, 8 de abril de 2019"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    <div class="desktop-icon">
-        <button class="icon-button">
-            <img src="images/icons/Recycle Bin (empty).png" alt="Recycle Bin">
-        </button>
-        <div class="icon-label" contenteditable="true" style="width:70px">Recycle Bin</div>
-    </div>
-    <div class="desktop-icon">
-        <button class="icon-button" onclick="website()">
-            <img src="images/icons/Command Prompt.png" alt="Command Prompt">
-        </button>
-        <div class="icon-label" contenteditable="true" style="width:70px">Command Prompt</div>
-    </div>
+<!-- ===== DESKTOP ===== -->
+<div class="desktop">
 
-    <div class="window" id="huntwrsite";>
-        <div class="title-bar">
-            <div class="title-bar-text">HUNTWR</div>
-            <div class="title-bar-controls">
-            <button aria-label="Minimize"></button>
-            <button aria-label="Maximize" onclick="Maximize(this)"></button>
-            <button aria-label="Close" onclick="Close(this)"></button>
-            </div>
-        </div>
-        <div class="window-body">
-            <iframe src="index.html" style="width:100%; height:92%; border:none; display:flex;"></iframe>
-        </div>
+  <!-- LOGIN WINDOW -->
+  <div class="window" id="welcome">
+    <div class="title-bar">
+      <div class="title-bar-text">Welcome to HuntwrOS</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize" onclick="Maximize(this)"></button>
+        <button aria-label="Close" onclick="Close(this)"></button>
+      </div>
     </div>
+    <div class="window-body" style="width: 220px; padding: 12px;">
+      <p>Welcome to HuntwrOS!</p>
+      <fieldset>
+        <legend>User</legend>
+        <div class="field-row">
+          <input id="radio17" type="radio" name="userSelect" value="huntwr">
+          <label for="radio17">Huntwr</label>
+        </div>
+        <div class="field-row">
+          <input id="radio18" type="radio" name="userSelect" value="mystery">
+          <label for="radio18">?????</label>
+        </div>
+        <div class="field-row">
+          <input id="radio19" type="radio" name="userSelect" value="guest">
+          <label for="radio19">Guest</label>
+        </div>
+      </fieldset>
+      <div id="passwordRow" class="field-row" style="display:none; margin-top: 8px;">
+        <label for="passwordInput">Password:</label>
+        <input type="password" id="passwordInput" style="width: 100%;" onkeydown="if(event.key==='Enter') login()">
+      </div>
+      <p id="loginError" style="color:red; display:none; margin: 4px 0;">Incorrect password.</p>
+      <div style="margin-top: 8px;">
+        <button onclick="login()">Enter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASKBAR -->
+  <div id="taskbar">
+    <div class="background sliced vertical">
+      <div class="row top"></div>
+      <div class="row middle"></div>
+      <div class="row bottom"></div>
+    </div>
+    <div id="start-button" onclick="toggleStartMenu(event)">
+      <div class="container">
+        <div class="background sliced">
+          <div class="column left">
+            <div class="row top"></div>
+            <div class="row middle"></div>
+            <div class="row bottom"></div>
+          </div>
+          <div class="column middle">
+            <div class="row top"></div>
+            <div class="row middle"></div>
+            <div class="row bottom"></div>
+          </div>
+          <div class="column right">
+            <div class="row top"></div>
+            <div class="row middle"></div>
+            <div class="row bottom"></div>
+          </div>
+        </div>
+        <div class="content">
+          <span class="icon"><img src="https://raw.githubusercontent.com/tdcosta100/WindowsXP/master/images/System/WindowsLogo-small.png" /></span>
+          <span class="text">Start</span>
+        </div>
+        <div class="overlay" title="Click here to start"></div>
+      </div>
+    </div>
+    <div id="task-band"></div>
+    <div id="tray-notify">
+      <div class="container">
+        <div class="background sliced">
+          <div class="column left">
+            <div class="row top"></div>
+            <div class="row middle"></div>
+            <div class="row bottom"></div>
+          </div>
+          <div class="column middle">
+            <div class="row top"></div>
+            <div class="row middle"></div>
+            <div class="row bottom"></div>
+          </div>
+          <div class="column right">
+            <div class="row top"></div>
+            <div class="row middle"></div>
+            <div class="row bottom"></div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="clock">
+            <div class="text" id="clockText">00:00</div>
+            <div class="overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- START MENU -->
+  <div id="start-menu">
+    <div id="start-menu-header">
+      <div class="user-icon">👤</div>
+      <div class="username" id="start-menu-username">Guest</div>
+    </div>
+    <div id="start-menu-body">
+      <div id="start-menu-left">
+        <div class="start-menu-item" onclick="openWindow('huntwrsite'); closeStartMenu()">
+          <div class="item-icon-placeholder">🌐</div>
+          <div class="item-label">Huntwr's Site<small>Open main website</small></div>
+        </div>
+        <div class="start-menu-separator"></div>
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">📁</div>
+          <div class="item-label">My Documents</div>
+        </div>
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">🖼️</div>
+          <div class="item-label">My Pictures</div>
+        </div>
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">🎵</div>
+          <div class="item-label">My Music</div>
+        </div>
+      </div>
+      <div id="start-menu-right">
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">💻</div>
+          <div class="item-label">My Computer</div>
+        </div>
+        <div class="start-menu-separator-right"></div>
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">🕹️</div>
+          <div class="item-label">Control Panel</div>
+        </div>
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">🔍</div>
+          <div class="item-label">Search</div>
+        </div>
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">❓</div>
+          <div class="item-label">Help and Support</div>
+        </div>
+        <div class="start-menu-item">
+          <div class="item-icon-placeholder">▶️</div>
+          <div class="item-label">Run...</div>
+        </div>
+      </div>
+    </div>
+    <div id="start-menu-footer">
+      <button class="start-menu-footer-btn" onclick="logout()">
+        <span class="btn-icon">🔓</span> Log Off
+      </button>
+      <button class="start-menu-footer-btn" onclick="closeStartMenu()">
+        <span class="btn-icon">⏻</span> Turn Off
+      </button>
+    </div>
+  </div>
+
+  <!-- DESKTOP ICONS -->
+  <div class="desktop-icon">
+    <button class="icon-button">
+      <img src="images/icons/Recycle Bin (empty).png" alt="Recycle Bin">
+    </button>
+    <div class="icon-label" contenteditable="true" style="width:70px">Recycle Bin</div>
+  </div>
+  <div class="desktop-icon">
+    <button class="icon-button" onclick="website()">
+      <img src="images/icons/Command Prompt.png" alt="Command Prompt">
+    </button>
+    <div class="icon-label" contenteditable="true" style="width:70px">Command Prompt</div>
+  </div>
+
+  <!-- HUNTWR SITE WINDOW -->
+  <div class="window" id="huntwrsite">
+    <div class="title-bar">
+      <div class="title-bar-text">HUNTWR</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize" onclick="Maximize(this)"></button>
+        <button aria-label="Close" onclick="Close(this)"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <iframe src="index.html" style="width:100%; height:92%; border:none; display:flex;"></iframe>
+    </div>
+  </div>
+
 </div>
 
 
+<script>
+  // ===== PASSWORD CONFIG =====
+  const HUNTWR_PASSWORD_HASH = "3f02a3b6fb524261e814534c8bb9f5327d682c4c335c186109c2bd2138f262bf";
+  const MYSTERY_PASSWORD = "I just farted";
 
-  <script>
-    function makeDraggableResizable(winId) {
-        const win = document.getElementById(winId);
-        const titleBar = win.querySelector(".title-bar");
+  const BACKGROUNDS = {
+    huntwr:  "images/pro.png",
+    mystery: "images/Mystery.png",
+    guest:   "images/Home.png"
+  };
 
-        // --- Dragging ---
-        let isDragging = false;
-        let offsetX = 0;
-        let offsetY = 0;
+  const USER_DISPLAY_NAMES = {
+    huntwr: "Huntwr",
+    mystery: "?????",
+    guest: "Guest"
+  };
 
-        titleBar.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            offsetX = e.clientX - win.offsetLeft;
-            offsetY = e.clientY - win.offsetTop;
-            win.style.position = "absolute";
-            win.style.zIndex = 1000; // bring to front
-        });
 
-        document.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
-            win.style.left = e.clientX - offsetX + "px";
-            win.style.top = e.clientY - offsetY + "px";
-        });
+  // ===== LOGIN =====
+  async function hashPassword(password) {
+    const msgBuffer = new TextEncoder().encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 
-        document.addEventListener("mouseup", () => {
-            isDragging = false;
-        });
+  async function login() {
+    const selected = document.querySelector('input[name="userSelect"]:checked');
+    if (!selected) { alert("Please select a user."); return; }
 
-        // --- Resizing ---
-        const resizer = document.createElement("div");
-        resizer.style.width = "10px";
-        resizer.style.height = "10px";
-        resizer.style.background = "transparent";
-        resizer.style.position = "absolute";
-        resizer.style.right = "0";
-        resizer.style.bottom = "0";
-        resizer.style.cursor = "se-resize";
-        win.appendChild(resizer);
+    const user = selected.value;
+    const password = document.getElementById("passwordInput").value;
+    const errorEl = document.getElementById("loginError");
+    errorEl.style.display = "none";
 
-        let isResizing = false;
-        let startWidth, startHeight, startX, startY;
+    if (user === "guest") { applyDesktop("guest"); return; }
 
-        resizer.addEventListener("mousedown", (e) => {
-            isResizing = true;
-            startWidth = win.offsetWidth;
-            startHeight = win.offsetHeight;
-            startX = e.clientX;
-            startY = e.clientY;
-            e.stopPropagation(); // prevent drag start
-        });
-
-        document.addEventListener("mousemove", (e) => {
-            if (!isResizing) return;
-            const newWidth = startWidth + (e.clientX - startX);
-            const newHeight = startHeight + (e.clientY - startY);
-            win.style.width = newWidth + "px";
-            win.style.height = newHeight + "px";
-        });
-
-        document.addEventListener("mouseup", () => {
-            isResizing = false;
-        });
+    if (user === "huntwr") {
+      const hash = await hashPassword(password);
+      if (hash === HUNTWR_PASSWORD_HASH) { applyDesktop("huntwr"); }
+      else { errorEl.style.display = "block"; }
+      return;
     }
 
-    function website(){
-        document.getElementById("huntwrsite").style.display = "block";
+    if (user === "mystery") {
+      if (password === MYSTERY_PASSWORD) { applyDesktop("mystery"); }
+      else { errorEl.style.display = "block"; }
+      return;
     }
+  }
 
-    function Minimize(){
-        alert("test");
+  function applyDesktop(user) {
+    document.getElementById("welcome").style.display = "none";
+    document.body.style.backgroundImage = `url('${BACKGROUNDS[user] || BACKGROUNDS.guest}')`;
+    sessionStorage.setItem("loggedInUser", user);
+    document.getElementById("start-menu-username").textContent = USER_DISPLAY_NAMES[user] || "Guest";
+  }
+
+  document.querySelectorAll('input[name="userSelect"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.getElementById("loginError").style.display = "none";
+      document.getElementById("passwordInput").value = "";
+      document.getElementById("passwordRow").style.display = radio.value === "guest" ? "none" : "flex";
+    });
+  });
+
+
+  // ===== LOGOUT =====
+  function logout() {
+    closeStartMenu();
+    sessionStorage.removeItem("loggedInUser");
+    document.body.style.backgroundImage = `url('images/Home.png')`;
+    document.querySelectorAll(".desktop .window").forEach(w => {
+      if (w.id !== "welcome") w.style.display = "none";
+    });
+    const welcome = document.getElementById("welcome");
+    welcome.style.display = "flex";
+    welcome.style.top = "50%";
+    welcome.style.left = "50%";
+    welcome.style.transform = "translate(-50%, -50%)";
+    document.querySelectorAll('input[name="userSelect"]').forEach(r => r.checked = false);
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("passwordRow").style.display = "none";
+    document.getElementById("loginError").style.display = "none";
+  }
+
+  let isMenuOpen = false;
+  // ===== START MENU =====
+function toggleStartMenu(e) {
+  e.stopPropagation();  // prevent the document click listener from firing
+  const menu = document.getElementById("start-menu");
+  const btn = document.getElementById("start-button");
+  isMenuOpen = !isMenuOpen;
+  menu.style.display = isMenuOpen ? "block" : "none";
+  btn.classList.toggle("pressed", isMenuOpen);
+}
+
+function closeStartMenu() {
+  isMenuOpen = false;  // ✅ add this
+  document.getElementById("start-menu").style.display = "none";
+  document.getElementById("start-button").classList.remove("pressed");
+}
+
+  document.addEventListener("click", (e) => {
+    const menu = document.getElementById("start-menu");
+    const btn = document.getElementById("start-button");
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+      closeStartMenu();
     }
-    function Maximize(button) {
-        const win = button.closest(".window"); // finds the parent window
-        win.style.width = window.innerWidth + "px";
-        win.style.height = window.innerHeight + "px";
-        win.style.left = "0px";
-        win.style.top = "0px";
+  });
+
+  function openWindow(id) {
+    document.getElementById(id).style.display = "block";
+  }
+
+
+  // ===== WINDOW MANAGEMENT =====
+  function makeDraggableResizable(winId) {
+    const win = document.getElementById(winId);
+    const titleBar = win.querySelector(".title-bar");
+
+    let isDragging = false, offsetX = 0, offsetY = 0;
+
+    titleBar.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      offsetX = e.clientX - win.offsetLeft;
+      offsetY = e.clientY - win.offsetTop;
+      win.style.position = "absolute";
+      win.style.zIndex = 1000;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      win.style.left = e.clientX - offsetX + "px";
+      win.style.top = e.clientY - offsetY + "px";
+    });
+
+    document.addEventListener("mouseup", () => { isDragging = false; });
+
+    const resizer = document.createElement("div");
+    Object.assign(resizer.style, { width:"10px", height:"10px", background:"transparent", position:"absolute", right:"0", bottom:"0", cursor:"se-resize" });
+    win.appendChild(resizer);
+
+    let isResizing = false, startWidth, startHeight, startX, startY;
+
+    resizer.addEventListener("mousedown", (e) => {
+      isResizing = true;
+      startWidth = win.offsetWidth; startHeight = win.offsetHeight;
+      startX = e.clientX; startY = e.clientY;
+      e.stopPropagation();
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (!isResizing) return;
+      win.style.width = startWidth + (e.clientX - startX) + "px";
+      win.style.height = startHeight + (e.clientY - startY) + "px";
+    });
+
+    document.addEventListener("mouseup", () => { isResizing = false; });
+  }
+
+  function website() { document.getElementById("huntwrsite").style.display = "block"; }
+
+  function Maximize(button) {
+    const win = button.closest(".window");
+    win.style.width = window.innerWidth + "px";
+    win.style.height = window.innerHeight + "px";
+    win.style.left = "0px";
+    win.style.top = "0px";
+  }
+
+  function Close(button) {
+    button.closest(".window").style.display = "none";
+  }
+
+
+  // ===== LOADING SCREEN =====
+  function Enter() {
+    document.getElementById("loading").style.display = "none";
+    document.querySelector(".desktop").style.display = "block";
+  }
+
+  function animateProgress() {
+    const bar = document.getElementById("loadingbar");
+    let value = 0;
+    const interval = setInterval(() => {
+      value++;
+      bar.value = value;
+      if (value >= 100) {
+        clearInterval(interval);
+        bar.style.display = "none";
+        document.getElementById("start").style.display = "block";
+        document.querySelector("#loadingtext p").innerText = "Welcome!";
+        sessionStorage.setItem("played", "true");
+      }
+    }, 30);
+  }
+
+
+  // ===== CLOCK =====
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById("clockText").textContent = `${h}:${m}`;
+  }
+  updateClock();
+  setInterval(updateClock, 10000);
+
+
+  // ===== INIT =====
+  window.onload = function() {
+    const user = sessionStorage.getItem("loggedInUser");
+    if (sessionStorage.getItem("played") === "true") {
+      document.getElementById("loading").style.display = "none";
+      document.querySelector(".desktop").style.display = "block";
+      if (user && BACKGROUNDS[user]) {
+        document.body.style.backgroundImage = `url('${BACKGROUNDS[user]}')`;
+        document.getElementById("welcome").style.display = "none";
+        document.getElementById("start-menu-username").textContent = USER_DISPLAY_NAMES[user] || "Guest";
+      }
+    } else {
+      document.getElementById("loading").style.display = "block";
+      document.querySelector(".desktop").style.display = "none";
+      animateProgress();
     }
+  };
 
-    function Close(button) {
-        const win = button.closest(".window");
-        win.style.display = "none";
-    }
-    function Enter() {
-        document.getElementById("loading").style.display = "none";
-        document.querySelector(".desktop").style.display = "block";
-    }
-
-    function animateProgress() {
-        const bar = document.getElementById("loadingbar");
-        let value = 0;
-        const interval = setInterval(() => {
-            value++;
-            bar.value = value;
-            if (value >= 100) {
-            clearInterval(interval);
-            bar.style.display = "none";
-            document.getElementById("start").style.display = "block";
-            document.querySelector("#loadingtext p").innerText = "Welcome!";
-            sessionStorage.setItem("played", "true");
-            }
-        }, 30); // ~3s total
-    };
-
-
-        window.onload = function() {
-        if (sessionStorage.getItem("played") === "true") {
-            document.getElementById("loading").style.display = "none";
-            document.querySelector(".desktop").style.display = "block";
-        } else {
-            document.getElementById("loading").style.display = "block";
-            document.querySelector(".desktop").style.display = "none";
-            animateProgress();
-        }
-        };
-
-    //windows making draggable
-    makeDraggableResizable("welcome");
-    makeDraggableResizable("loadingwin");
-    makeDraggableResizable("huntwrsite");
-  </script>
-  <script src="taskbar.js"></script>
+  makeDraggableResizable("welcome");
+  makeDraggableResizable("loadingwin");
+  makeDraggableResizable("huntwrsite");
+</script>
+<script src="taskbar.js"></script>
 </body>
 </html>
